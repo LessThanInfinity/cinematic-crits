@@ -1,0 +1,33 @@
+{
+  "id": "cinematic-crits",
+  "title": "Cinematic Crits",
+  "description": "A simple module using that displays a gif image whenever an actor crits.",
+  "authors": [
+    {
+      "name": "Darshan Shakya",
+      "email": "darshan.signups@gmail.com"
+    }
+  ],
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "9",
+    "verified": "10"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system"
+      }
+    ],
+    "requires": [
+      {
+        "id": "scene-transitions",
+        "type": "module"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/module.js"
+  ]
+}

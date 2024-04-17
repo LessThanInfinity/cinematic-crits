@@ -30,5 +30,5 @@
   "esmodules": [
     "scripts/module.js"
   ],
-  "url": "https://github.com/LessThanInfinity/cinematic-crits"
+  "download": "https://github.com/LessThanInfinity/cinematic-crits/archive/refs/heads/main.zip"
 }

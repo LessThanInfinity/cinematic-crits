@@ -29,5 +29,6 @@
   },
   "esmodules": [
     "scripts/module.js"
-  ]
+  ],
+  "url": "https://github.com/LessThanInfinity/cinematic-crits"
 }

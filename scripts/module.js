@@ -15,8 +15,11 @@ Hooks.on("preCreateChatMessage", async (message) => {
     .join("_")}.gif`;
 
   const bgImg = `${fileFolderName}/${critFilename}`;
+  const defaultCritSound =
+    "modules/cinematic-crits/assets/sfx/default_crit.wav";
   const audioFilePath = "upload/Sounds/Crit/default_crit.wav";
   console.log("audioFilePath", audioFilePath);
+  console.log("defaultCritSound", defaultCritSound);
 
   if (outcome === "criticalSuccess" && !isBlind) {
     // const bgImg = imageFiles[Math.floor(Math.random() * imageFiles.length)];
@@ -39,7 +42,7 @@ Hooks.on("preCreateChatMessage", async (message) => {
         fadeIn: 400,
         delay: 2000,
         fadeOut: 400,
-        audio: audioFilePath,
+        audio: defaultCritSound,
         skippable: true,
         audioLoop: false,
         gmHide: false,

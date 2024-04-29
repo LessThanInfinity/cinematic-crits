@@ -18,6 +18,8 @@ Hooks.on("preCreateChatMessage", async (message) => {
   if (outcome === "criticalSuccess" && !isBlind) {
     // const bgImg = imageFiles[Math.floor(Math.random() * imageFiles.length)];
     // your macro here, and just put bgImg well at bgImg in your large object.
+    const audioFilePath = "upload/Sounds/Crit/default_crit.wav";
+    console.log("audioFilePath", audioFilePath);
     game.modules.get("scene-transitions").api.macro(
       {
         sceneID: false,
@@ -34,7 +36,7 @@ Hooks.on("preCreateChatMessage", async (message) => {
         fadeIn: 400,
         delay: 2000,
         fadeOut: 400,
-        audio: "",
+        audio: audioFilePath,
         skippable: true,
         audioLoop: false,
         gmHide: false,

@@ -11,7 +11,7 @@ Hooks.on("preCreateChatMessage", async (message) => {
   const critFilename = `${message.actor.name
     .toLowerCase()
     .split(" ")
-    .join("_")}_crit.gif`;
+    .join("_")}.gif`;
 
   const bgImg = `${fileFolderName}/${critFilename}`;
 

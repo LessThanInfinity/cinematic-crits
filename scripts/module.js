@@ -137,6 +137,6 @@ Hooks.on("preCreateChatMessage", async (message) => {
       true
     );
 
-    return "asd";
+    return "";
   }
 });

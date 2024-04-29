@@ -1,14 +1,7 @@
-// const fs = require("fs");
-
-// const MAIN_DIRECTORY = "cinematic_crits/upload";
-// const IMAGE_DIRECTORY = "cinematic_crits/upload/images";
-// const SOUND_DIRECTORY = "cinematic_crits/upload/sounds";
-
 const createMainDir = async () => {
   try {
     await FilePicker.createDirectory("data", "cinematic_crits");
   } catch (err) {
-    // console.error(err);
     console.log("Cinematic: main directory already exists");
   }
 };
@@ -17,7 +10,6 @@ const createUploadDir = async () => {
   try {
     await FilePicker.createDirectory("data", "cinematic_crits/upload");
   } catch (err) {
-    // console.error(err);
     console.log("Cinematic: Upload directory already exists");
   }
 };
@@ -26,7 +18,6 @@ const createImagesDir = async () => {
   try {
     await FilePicker.createDirectory("data", "cinematic_crits/upload/images");
   } catch (err) {
-    // console.error(err);
     console.log("Cinematic: Upload/images directory already exists");
   }
 };
@@ -35,7 +26,6 @@ const createSoundsDir = async () => {
   try {
     await FilePicker.createDirectory("data", "cinematic_crits/upload/sounds");
   } catch (err) {
-    // console.error(err);
     console.log("Cinematic: Upload/sounds directory already exists");
   }
 };
@@ -52,18 +42,23 @@ Hooks.once("init", async () => {
   await createCinematicCritDirectories();
 });
 
+/**
+ * Fetches expected image file for actor.
+ * @param {string} actorName
+ * @returns String - path to image file
+ */
 const getCritImageForActor = async (actorName) => {
+  // TODO: consider whether we want to allow multiple images under a directory like with sounds.
   const imageFileName = `${actorName.toLowerCase().split(" ").join("_")}.gif`;
   return `cinematic_crits/upload/images/${imageFileName}`;
-
-  // TODO: consider whether we want to allow multiple images under a directory.
-  // const critImagePath = await FilePicker.browse(
-  //   "data",
-  //   `cinematic_crits/upload/images/${imageFileName}`
-  // );
-  // return critImagePath;
 };
 
+/**
+ * Fetches a random audio file from the actor's directory.
+ * If no files exist, sends back the default crit sound.
+ * @param {string} actorName
+ * @returns String - path to audio file
+ */
 const getCritSoundForActor = async (actorName) => {
   const audioDirectoryName = `${actorName.toLowerCase().split(" ").join("_")}`;
   const defaultCritSound =
@@ -100,16 +95,7 @@ const getCritSoundForActor = async (actorName) => {
 Hooks.on("preCreateChatMessage", async (message) => {
   const outcome = message?.flags?.pf2e?.context?.outcome;
   const isBlind = message.blind;
-  console.log("============+FIRING CINEMATIC CRITS+==================");
-
-  const fileFolderName = "upload/Images/Crit";
-  /* Make names obvious: lowercase all + join with underscore. */
-  const critFilename = `${message.actor.name
-    .toLowerCase()
-    .split(" ")
-    .join("_")}.gif`;
-
-  // const bgImg = `${fileFolderName}/${critFilename}`;
+  console.log("cinematic: Firing crits.");
 
   const bgImg = await getCritImageForActor(message.actor.name);
   const audio = await getCritSoundForActor(message.actor.name);
@@ -118,13 +104,7 @@ Hooks.on("preCreateChatMessage", async (message) => {
   console.log("cinematic: bgImg", bgImg);
   console.log("cinematic: audio", audio);
 
-  // const audioFileList = await FilePicker.browse("data", 'upload/Images/Crit');
-
-  // const imageFiles = fileList.files.filter(f => ImageHelper.hasImageExtension(f) || VideoHelper.hasVideoExtension(f));
-  // const bgImg = imageFiles[Math.floor(Math.random() * imageFiles.length)];
-
   if (outcome === "criticalSuccess" && !isBlind) {
-    // const bgImg = imageFiles[Math.floor(Math.random() * imageFiles.length)];
     // your macro here, and just put bgImg well at bgImg in your large object.
     const audioFilePath = "upload/Sounds/Crit/default_crit.wav";
     console.log("audioFilePath", audioFilePath);

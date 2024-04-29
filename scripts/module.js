@@ -5,6 +5,7 @@ Hooks.once("init", () => {
 Hooks.on("preCreateChatMessage", async (message) => {
   const outcome = message?.flags?.pf2e?.context?.outcome;
   const isBlind = message.blind;
+  console.log("============+FIRING CINEMATIC CRITS+==================");
 
   const fileFolderName = "upload/Images/Crit";
   /* Make names obvious: lowercase all + join with underscore. */
@@ -14,6 +15,8 @@ Hooks.on("preCreateChatMessage", async (message) => {
     .join("_")}.gif`;
 
   const bgImg = `${fileFolderName}/${critFilename}`;
+  const audioFilePath = "upload/Sounds/Crit/default_crit.wav";
+  console.log("audioFilePath", audioFilePath);
 
   if (outcome === "criticalSuccess" && !isBlind) {
     // const bgImg = imageFiles[Math.floor(Math.random() * imageFiles.length)];

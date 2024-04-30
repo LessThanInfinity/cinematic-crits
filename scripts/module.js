@@ -48,9 +48,32 @@ Hooks.once("init", async () => {
  * @returns String - path to image file
  */
 const getCritImageForActor = async (actorName) => {
+  const imageDirectoryName = `${actorName.toLowerCase().split(" ").join("_")}`;
+  try {
+    const fileList = await FilePicker.browse(
+      "data",
+      `cinematic_crits/upload/images/${imageDirectoryName}`
+    );
+    const imageFiles = fileList.files.filter(
+      (f) =>
+        ImageHelper.hasImageExtension(f) || VideoHelper.hasVideoExtension(f)
+    );
+    const critImage = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+
+    /* If no files exist, send back default sound.  */
+    if (critImage) {
+      return critImage;
+    } else {
+      console.log("cinematic: No files in actor image directory");
+    }
+  } catch (err) {
+    console.error("cinematic: Image fetch:", err);
+    // send back default if error or cannot find directory
+    console.log("cinematic: No actor directory found. ");
+  }
   // TODO: consider whether we want to allow multiple images under a directory like with sounds.
-  const imageFileName = `${actorName.toLowerCase().split(" ").join("_")}.gif`;
-  return `cinematic_crits/upload/images/${imageFileName}`;
+  // const imageFileName = `${actorName.toLowerCase().split(" ").join("_")}.gif`;
+  // return `cinematic_crits/upload/images/${imageFileName}`;
 };
 
 /**

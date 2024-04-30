@@ -146,7 +146,7 @@ const fireCritCinematic = async (message) => {
         bgOpacity: 1,
         fadeIn: 400,
         delay: 2000,
-        fadeOut: 400,
+        fadeOut: 1000,
         audio,
         skippable: true,
         audioLoop: false,

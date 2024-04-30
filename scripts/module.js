@@ -94,11 +94,12 @@ const getCritSoundForActor = async (actorName) => {
   }
 };
 
-Hooks.on("preCreateChatMessage", async (message) => {
+const fireCritCinematic = async (message) => {
   const outcome = message?.flags?.pf2e?.context?.outcome;
   const isBlind = message.blind;
   console.log("cinematic: Firing crits.");
 
+  // Get an image to diplay and a sound to play for the cinematic.
   const bgImg = await getCritImageForActor(message.actor.name);
   const audio = await getCritSoundForActor(message.actor.name);
 
@@ -107,9 +108,6 @@ Hooks.on("preCreateChatMessage", async (message) => {
   console.log("cinematic: audio", audio);
 
   if (outcome === "criticalSuccess" && !isBlind) {
-    // your macro here, and just put bgImg well at bgImg in your large object.
-    const audioFilePath = "upload/Sounds/Crit/default_crit.wav";
-    console.log("audioFilePath", audioFilePath);
     game.modules.get("scene-transitions").api.macro(
       {
         sceneID: false,
@@ -141,4 +139,21 @@ Hooks.on("preCreateChatMessage", async (message) => {
 
     return "";
   }
+};
+
+/**
+ * If dice-so-nice is not enabled, we can fire the cinematic on preCreateChatMessage.
+ */
+Hooks.on("preCreateChatMessage", async (message) => {
+  if (!Hooks.events.diceSoNiceRollComplete) {
+    fireCritCinematic(message);
+  }
+});
+
+/**
+ * Specifically for the dice-so-nice module, wait for the roll to complete before firing the cinematic.
+ */
+Hooks.on("diceSoNiceRollComplete", async (messageId) => {
+  const message = game.messages.get(messageId);
+  fireCritCinematic(message);
 });

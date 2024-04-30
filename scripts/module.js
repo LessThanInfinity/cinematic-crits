@@ -83,12 +83,14 @@ const getCritSoundForActor = async (actorName) => {
       return defaultCritSound;
     }
   } catch (err) {
-    console.error("Cinematic: Audio fetch:", err);
-
+    console.error("cinematic: Audio fetch:", err);
     // send back default if error or cannot find directory
-    console.log("cinematic: Using default crit sound");
+    console.log("cinematic: No actor directory found. ");
 
-    return defaultCritSound;
+    // TODO: Consider whether we want to send back default crit sound if no directory found.
+    // We cannot return this because it will do a crit sound for every actor.
+    // Perhaps we make this a setting.
+    // return defaultCritSound;
   }
 };
 

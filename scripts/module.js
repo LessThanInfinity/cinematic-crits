@@ -120,17 +120,19 @@ const getCritSoundForActor = async (actorName) => {
 const fireCritCinematic = async (message) => {
   const outcome = message?.flags?.pf2e?.context?.outcome;
   const isBlind = message.blind;
-  console.log("cinematic: Firing crits.");
+  const isDamageRoll = message.flags?.pf2e?.context?.type === "damage-roll";
 
-  // Get an image to diplay and a sound to play for the cinematic.
-  const bgImg = await getCritImageForActor(message.actor.name);
-  const audio = await getCritSoundForActor(message.actor.name);
+  if (outcome === "criticalSuccess" && !isBlind && !isDamageRoll) {
+    console.log("cinematic: Firing crits.", message);
 
-  // console.log("defaultCritSound", defaultCritSound);
-  console.log("cinematic: bgImg", bgImg);
-  console.log("cinematic: audio", audio);
+    // Get an image to diplay and a sound to play for the cinematic.
+    const bgImg = await getCritImageForActor(message.actor.name);
+    const audio = await getCritSoundForActor(message.actor.name);
 
-  if (outcome === "criticalSuccess" && !isBlind) {
+    // console.log("defaultCritSound", defaultCritSound);
+    console.log("cinematic: bgImg", bgImg);
+    console.log("cinematic: audio", audio);
+
     game.modules.get("scene-transitions").api.macro(
       {
         sceneID: false,
@@ -144,9 +146,9 @@ const fireCritCinematic = async (message) => {
         bgSize: "cover",
         bgColor: "transparent",
         bgOpacity: 1,
-        fadeIn: 400,
+        fadeIn: 800,
         delay: 2000,
-        fadeOut: 1000,
+        fadeOut: 700,
         audio,
         skippable: true,
         audioLoop: false,

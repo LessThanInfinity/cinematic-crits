@@ -170,15 +170,15 @@ const fireCritCinematic = async (message) => {
  * If dice-so-nice is not enabled, we can fire the cinematic on preCreateChatMessage.
  */
 Hooks.on("preCreateChatMessage", async (message) => {
-  if (!Hooks.events.diceSoNiceRollComplete) {
-    fireCritCinematic(message);
-  }
+  // if (!Hooks.events.diceSoNiceRollComplete) {
+  fireCritCinematic(message);
+  // }
 });
 
 /**
  * Specifically for the dice-so-nice module, wait for the roll to complete before firing the cinematic.
  */
-Hooks.on("diceSoNiceRollComplete", async (messageId) => {
-  const message = game.messages.get(messageId);
-  fireCritCinematic(message);
-});
+// Hooks.on("diceSoNiceRollComplete", async (messageId) => {
+//   const message = game.messages.get(messageId);
+//   fireCritCinematic(message);
+// });
